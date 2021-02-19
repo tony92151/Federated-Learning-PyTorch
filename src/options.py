@@ -8,6 +8,9 @@ import argparse
 def args_parser():
     parser = argparse.ArgumentParser()
 
+    parser.add_argument('--tbpath', type=str, default='../logs',
+                        help="tensorboard log path")
+
     # federated arguments (Notation for the arguments followed from paper)
     parser.add_argument('--epochs', type=int, default=10,
                         help="number of rounds of training")

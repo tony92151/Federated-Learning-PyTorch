@@ -18,19 +18,27 @@ from update import LocalUpdate, test_inference
 from models import MLP, CNNMnist, CNNFashion_Mnist, CNNCifar
 from utils import get_dataset, average_weights, exp_details
 
+from datetime import datetime
+
 
 if __name__ == '__main__':
     start_time = time.time()
 
     # define paths
     path_project = os.path.abspath('..')
-    logger = SummaryWriter('../logs')
+    # logger = SummaryWriter('../logs')
 
     args = args_parser()
     exp_details(args)
 
+    savetime = datetime.now().strftime("%m-%d-%H-%M-%S")
+    logpath = os.path.join(args.tbpath, savetime)
+    if not os.path.exists(os.path.abspath(logpath)):
+        os.mkdir(os.path.abspath(logpath))
+    logger = SummaryWriter(logpath)
+
     if args.gpu:
-        torch.cuda.set_device(args.gpu)
+        torch.cuda.set_device(int(args.gpu))
     device = 'cuda' if args.gpu else 'cpu'
 
     # load dataset and user groups
@@ -122,9 +130,9 @@ if __name__ == '__main__':
     print("|---- Test Accuracy: {:.2f}%".format(100*test_acc))
 
     # Saving the objects train_loss and train_accuracy:
-    file_name = '../save/objects/{}_{}_{}_C[{}]_iid[{}]_E[{}]_B[{}].pkl'.\
-        format(args.dataset, args.model, args.epochs, args.frac, args.iid,
-               args.local_ep, args.local_bs)
+    file_name = os.path.abspat('../save/objects/{}_{}_{}_C[{}]_iid[{}]_E[{}]_B[{}].pkl'.\
+                format(args.dataset, args.model, args.epochs, args.frac, args.iid,
+                args.local_ep, args.local_bs))
 
     with open(file_name, 'wb') as f:
         pickle.dump([train_loss, train_accuracy], f)

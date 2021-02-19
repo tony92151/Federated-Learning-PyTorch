@@ -35,11 +35,11 @@ Federated experiment involves training a global model using many local models.
 
 * To run the federated experiment with CIFAR on CNN (IID):
 ```
-python src/federated_main.py --model=cnn --dataset=cifar --gpu=0 --iid=1 --epochs=10
+python src/federated_main.py --model=cnn --dataset=cifar --gpu=0 --iid=1 --epochs=10 --tbpath=/root/notebooks/tensorflow/logs
 ```
 * To run the same experiment under non-IID condition:
 ```
-python src/federated_main.py --model=cnn --dataset=cifar --gpu=0 --iid=0 --epochs=10
+python src/federated_main.py --model=cnn --dataset=cifar --gpu=0 --iid=0 --epochs=10 --tbpath=/root/notebooks/tensorflow/logs
 ```
 
 You can change the default values of other parameters to simulate different conditions. Refer to the options section.
@@ -62,6 +62,9 @@ The default values for various paramters parsed to the experiment are given in `
 * ```--local_ep:``` Number of local training epochs in each user. Default is 10.
 * ```--local_bs:``` Batch size of local updates in each user. Default is 10.
 * ```--unequal:```  Used in non-iid setting. Option to split the data amongst users equally or unequally. Default set to 0 for equal splits. Set to 1 for unequal splits.
+
+#### Federated Parameters
+* ```--tbpath:```   Tensorboard log path.
 
 ## Results on MNIST
 #### Baseline Experiment:
